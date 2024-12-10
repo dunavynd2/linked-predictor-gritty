@@ -71,9 +71,9 @@ if submit_button:
     # Prepare features
     features = pd.DataFrame({
         'income': [income_value],
-        'educ2': [education_value],
-        'par': [1 if parent == 'Yes' else 0],
-        'marital': [1 if married == 'Yes' else 0],
+        'education': [education_value],
+        'parent': [1 if parent == 'Yes' else 0],
+        'married': [1 if married == 'Yes' else 0],
         'female': [1 if female == 'Yes' else 0],
         'age': [age]
     })
