@@ -26,7 +26,7 @@ income_options = {
     "$50,000 to $74,999": 6,
     "$75,000 to $99,999": 7,
     "$100,000 to $150,000": 8,
-    "Greater than $150,000": 9
+    "Greater than $150,000": 9,
 }
 
 # Education options (1-8)
@@ -73,9 +73,9 @@ if submit_button:
         'income': [income_value],
         'education': [education_value],
         'parent': [1 if parent == 'Yes' else 0],
-        'married': [1 if married == 'Yes' else 0],
-        'female': [1 if female == 'Yes' else 0],
-        'age': [age]
+        'marital': [1 if married == 'Yes' else 0],
+        'age': [age],
+        'female': [1 if female == 'Yes' else 0]
     })
 
     # Make prediction
