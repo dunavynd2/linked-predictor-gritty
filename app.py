@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
+import altair as alt
 
 # Page config
 st.set_page_config(page_title='LinkedIn User Predictor', layout='wide')
@@ -81,7 +82,27 @@ if submit_button:
     # Make prediction
     prediction = model.predict(features)
     probability = model.predict_proba(features)[0][1]
+    
+ # Create visualization data
+    prob_data = pd.DataFrame({
+        'Outcome': ['Not LinkedIn User', 'LinkedIn User'],
+        'Probability': [1 - probability, probability]
+    })
 
+    # Create Altair chart
+    chart = alt.Chart(prob_data).mark_bar().encode(
+        x=alt.X('Outcome:N', title='Prediction'),
+        y=alt.Y('Probability:Q', 
+                scale=alt.Scale(domain=[0, 1]),
+                axis=alt.Axis(format='%')),
+        color=alt.Color('Outcome:N',
+                       scale=alt.Scale(domain=['LinkedIn User', 'Not LinkedIn User'],
+                                     range=['#1f77b4', '#ff7f0e']))
+    ).properties(
+        title='Prediction Probabilities',
+        width=400,
+        height=300
+    )
     # Show results
     st.header('Prediction Results')
     
@@ -92,5 +113,6 @@ if submit_button:
     col1, col2 = st.columns(2)
     with col1:
         st.metric("Predicted Category", result)
-    with col2:
         st.metric("Probability of being a LinkedIn User", f"{prob_pct:.1f}%")
+    with col2:
+        st.altair_chart(chart, use_container_width=True)
